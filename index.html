@@ -10,30 +10,33 @@
 		<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 	</head>
 	<body>
-		<div>
+		<div class="w3-col w3-container" style="width:100%">
 			<h1 align="center">Wypożyczalnia aut</h1>
 			<br/>
-			<div>
-				<div align="right">
-					<button type="button" name="dodaj" id="dodaj" class="w3-button w3-green">Dodaj</button>
-					
+			<div >
+				<div align="left">
+					<label>Dodaj nowe auto: </label>
+					<button type="button" name="dodaj" id="dodaj" class="w3-button w3-green w3-padding-small">Dodaj</button>	
 				</div>
 				<br/>
 				<div id="alert"></div>
 				
-				<table id="informacje" class="w3-table-all">
+				<div class="w3-responsive">
+				<table id="informacje" class="w3-table-all w3-hoverable">
 					<thead>
-						<tr>
+						<tr class="w3-dark-grey">
 							<th>Marka</th>
 							<th>Model</th>
 							<th>Rocznik</th>
 							<th>Osoba wypożyczająca</th>
 							<th>Data wypożyczenia</th>
 							<th>Data ost. przeglądu</th>
-							<th></th>
+							<th>Akcja</th>
 						</tr>
 					</thead>
 				</table>
+
+				</div>
 			</div>
 		</div>
 	</body>
@@ -52,9 +55,10 @@
     "processing" : true,
     "serverSide" : true,
     "order" : [],
+	"dom": '<"top"i>rt<"bottom"flp><"clear">',
 	language: {
         processing:     "Przetwarzanie...",
-        search:         "Szukaj&nbsp; :",
+        search:         "Szukaj:&nbsp;",
         lengthMenu:    "Wyświetl _MENU_ rekordów",
         info:           "Wyświetlanie  _START_ - _END_ z _TOTAL_ rekordów",
         infoEmpty:      "Wyświetlanie  0 - 0 z 0 rekordów",
