@@ -35,7 +35,7 @@ while($row = mysqli_fetch_array($result))
  $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="os_wypoz">' . $row["os_wypoz"] . '</div>';
  $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="data_wypoz">' . $row["data_wypoz"] . '</div>';
  $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="ost_przeglad">' . $row["ost_przeglad"] . '</div>';
- $sub_array[] = '<button type="button" name="delete" class="btn btn-danger btn-xs delete" id="'.$row["id"].'">Delete</button>';
+ $sub_array[] = '<button type="button" name="delete" class="w3-button w3-red w3-padding-small" id="'.$row["id"].'">Usuń</button>';
  $data[] = $sub_array;
 }
 

@@ -23,7 +23,7 @@
 				<br/>
 				<div id="alert"></div>
 				
-				<table id="informacje" class="table table-bordered table-striped">
+				<table id="informacje" class="w3-table-all">
 					<thead>
 						<tr>
 							<th>Marka</th>
@@ -58,5 +58,50 @@
     }
    });
   }
+  
+  $('#dodaj').click(function(){
+   var html = '<tr>';
+   html += '<td contenteditable id="d1"></td>';
+   html += '<td contenteditable id="d2"></td>';
+   html += '<td contenteditable id="d3"></td>';
+   html += '<td contenteditable id="d4"></td>';
+   html += '<td contenteditable id="d5"></td>';
+   html += '<td contenteditable id="d6"></td>';
+   html += '<td><button type="button" name="wstaw" id="wstaw" class="w3-button w3-green">Dodaj</button></td>';
+   html += '</tr>';
+   $('#informacje tbody').prepend(html);
+  });
+  
+  $(document).on('click', '#wstaw', function(){
+   var model = $('#d1').text();
+   var marka = $('#d2').text();
+   var rocznik = $('#d3').text();
+   var os_wypoz = $('#d4').text();
+   var data_wypoz = $('#d5').text();
+   var ost_przeglad = $('#d6').text();
+   
+   if(model != '' && marka != '' && rocznik != '' && ost_przeglad != '')
+   {
+    $.ajax({
+     url:"dodaj.php",
+     method:"POST",
+     data:{model:model, marka:marka, rocznik:rocznik, os_wypoz:os_wypoz, data_wypoz:data_wypoz, ost_przeglad:ost_przeglad},
+     success:function(data)
+     {
+      $('#alert').html('<div class="alert alert-success">'+data+'</div>');
+      $('#informacje').DataTable().destroy();
+      wysw_inf();
+     }
+    });
+    setInterval(function(){
+     $('#alert').html('');
+    }, 5000);
+   }
+   else
+   {
+    alert("Model, marka, rocznik oraz ostatni przegląd muszą zostać uzupełnione!");
+   }
+  });
+  
   });
  </script>
