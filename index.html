@@ -5,11 +5,9 @@
 		<title>Wypożyczalnia aut</title>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 	</head>
 	<body>
 		<div>
@@ -101,6 +99,31 @@
    {
     alert("Model, marka, rocznik oraz ostatni przegląd muszą zostać uzupełnione!");
    }
+  });
+  
+  function edycja(id, kolumna, wart)
+  {
+   $.ajax({
+    url:"edycja.php",
+    method:"POST",
+    data:{id:id, kolumna:kolumna, wart:wart},
+    success:function(data)
+    {
+     $('#alert').html('<div class="alert alert-success">'+data+'</div>');
+     $('#informacje').DataTable().destroy();
+     wysw_inf();
+    }
+   });
+   setInterval(function(){
+    $('#alert').html('');
+   }, 5000);
+  }
+
+  $(document).on('blur', '.update', function(){
+   var id = $(this).data("id");
+   var kolumna = $(this).data("column");
+   var wart = $(this).text();
+   edycja(id, kolumna, wart);
   });
   
   });
