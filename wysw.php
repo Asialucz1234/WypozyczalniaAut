@@ -16,9 +16,22 @@ if(isset($_POST["search"]["value"]))
  ';
 }
 
-$query .= 'ORDER BY id DESC ';
+if(isset($_POST["order"]))
+{
+ $query .= 'ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir'].' 
+ ';
+}
+else
+{
+ $query .= 'ORDER BY id DESC ';
+}
 
 $query1 = '';
+
+if($_POST["length"] != -1)
+{
+ $query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+}
 
 $number_filter_row = mysqli_num_rows(mysqli_query($connect, $query));
 
@@ -35,7 +48,7 @@ while($row = mysqli_fetch_array($result))
  $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="os_wypoz">' . $row["os_wypoz"] . '</div>';
  $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="data_wypoz">' . $row["data_wypoz"] . '</div>';
  $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="ost_przeglad">' . $row["ost_przeglad"] . '</div>';
- $sub_array[] = '<button type="button" name="delete" class="w3-button w3-red w3-padding-small" id="'.$row["id"].'">Usuń</button>';
+ $sub_array[] = '<button type="button" name="usun" class="w3-button w3-red w3-padding-small usun" id="'.$row["id"].'">Usuń</button>';
  $data[] = $sub_array;
 }
 

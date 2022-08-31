@@ -39,25 +39,47 @@
 	</body>
 </html>
 
+
 <script type="text/javascript" language="javascript" >
+
  $(document).ready(function(){
   
   wysw_inf();
 
-  function wysw_inf()
-  {
+  function wysw_inf(){
+  
    var dataTable = $('#informacje').DataTable({
     "processing" : true,
     "serverSide" : true,
     "order" : [],
+	language: {
+        processing:     "Przetwarzanie...",
+        search:         "Szukaj&nbsp; :",
+        lengthMenu:    "Wyświetl _MENU_ rekordów",
+        info:           "Wyświetlanie  _START_ - _END_ z _TOTAL_ rekordów",
+        infoEmpty:      "Wyświetlanie  0 - 0 z 0 rekordów",
+        infoFiltered:   "(wyfiltrowane z _MAX_ wszystkich rekordów)",
+        infoPostFix:    "",
+        loadingRecords: "Wczytywanie...",
+        zeroRecords:    "Brak rekordów",
+        emptyTable:     "Brak pojazdów",
+        paginate: {
+            first:      "Pierwsza",
+            previous:   "Poprzednia",
+            next:       "Następna",
+            last:       "Ostatnia"
+        }
+    },
     "ajax" : {
      url:"wysw.php",
      type:"POST"
     }
    });
+   
   }
   
   $('#dodaj').click(function(){
+  
    var html = '<tr>';
    html += '<td contenteditable id="d1"></td>';
    html += '<td contenteditable id="d2"></td>';
@@ -68,18 +90,20 @@
    html += '<td><button type="button" name="wstaw" id="wstaw" class="w3-button w3-green">Dodaj</button></td>';
    html += '</tr>';
    $('#informacje tbody').prepend(html);
+   
   });
   
   $(document).on('click', '#wstaw', function(){
-   var model = $('#d1').text();
-   var marka = $('#d2').text();
+  
+   var marka = $('#d1').text();
+   var model = $('#d2').text();
    var rocznik = $('#d3').text();
    var os_wypoz = $('#d4').text();
    var data_wypoz = $('#d5').text();
    var ost_przeglad = $('#d6').text();
    
-   if(model != '' && marka != '' && rocznik != '' && ost_przeglad != '')
-   {
+   if(model != '' && marka != '' && rocznik != '' && ost_przeglad != ''){
+   
     $.ajax({
      url:"dodaj.php",
      method:"POST",
@@ -93,16 +117,17 @@
     });
     setInterval(function(){
      $('#alert').html('');
-    }, 5000);
+    }, 4000);
    }
    else
    {
     alert("Model, marka, rocznik oraz ostatni przegląd muszą zostać uzupełnione!");
    }
+   
   });
   
-  function edycja(id, kolumna, wart)
-  {
+  function edycja(id, kolumna, wart){
+  
    $.ajax({
     url:"edycja.php",
     method:"POST",
@@ -116,15 +141,38 @@
    });
    setInterval(function(){
     $('#alert').html('');
-   }, 5000);
+   }, 4000);
   }
 
   $(document).on('blur', '.update', function(){
+  
    var id = $(this).data("id");
    var kolumna = $(this).data("column");
    var wart = $(this).text();
    edycja(id, kolumna, wart);
+   
   });
   
+  $(document).on('click', '.usun', function(){
+  
+   var id = $(this).attr("id");
+   if(confirm("Czy na pewno usunąć?"))
+   {
+    $.ajax({
+     url:"usun.php",
+     method:"POST",
+     data:{id:id},
+     success:function(data){
+      $('#alert').html('<div class="alert alert-success">'+data+'</div>');
+      $('#informacje').DataTable().destroy();
+      wysw_inf();
+     }
+    });
+    setInterval(function(){
+     $('#alert').html('');
+    }, 4000);
+   }
+  });
+    
   });
  </script>
